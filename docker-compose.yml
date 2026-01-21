@@ -1,0 +1,22 @@
+services:
+  frigate:
+    container_name: frigate
+    image: ghcr.io/blakeblackshear/frigate:stable
+    restart: unless-stopped
+    shm_size: "128mb"
+    volumes:
+      - ./config:/config
+      - ./media:/media/frigate
+      - type: tmpfs
+        target: /tmp/cache
+        tmpfs:
+          size: 1000000000
+    ports:
+      - "8971:8971"
+      - "5000:5000"
+      - "1984:1984"   # go2rtc web UI (optional but great for debugging) :contentReference[oaicite:10]{index=10}
+      - "8554:8554"   # RTSP restream (optional) :contentReference[oaicite:11]{index=11}
+      - "8555:8555/tcp"
+      - "8555:8555/udp"
+    environment:
+      - TZ=Africa/Cairo

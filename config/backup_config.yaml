@@ -1,0 +1,12 @@
+detectors:
+  cpu1:
+    type: cpu
+
+cameras:
+  test_video:
+    ffmpeg:
+      inputs:
+        - path: /media/frigate/videos/video.mp4
+          roles:
+            - detect
+          input_args: -stream_loop -1

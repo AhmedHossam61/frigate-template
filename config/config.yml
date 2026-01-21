@@ -1,0 +1,23 @@
+mqtt:
+  enabled: false
+  host: 127.0.0.1
+
+detectors:
+  cpu1:
+    type: cpu
+
+cameras:
+  test_video:
+    ffmpeg:
+      inputs:
+        - path: /media/frigate/videos/veo3_construction.mp4
+          input_args: "-re -stream_loop -1 -fflags +genpts"
+          roles:
+            - detect
+    detect:
+      enabled: true
+      width: 362
+      height: 398
+      fps: 5
+
+version: 0.16-0
