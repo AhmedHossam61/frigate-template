@@ -6,6 +6,19 @@ detectors:
   cpu1:
     type: cpu
 
+model:
+  path: /config/model/best_float32.tflite
+  width: 362
+  height: 398
+  input_tensor: nchw
+  input_pixel_format: rgb
+  labelmap_path: /config/model/labelmap.txt
+
+objects:
+  track:
+    - Safety-Helmet
+    - Reflective-Jacket
+
 cameras:
   test_video:
     ffmpeg:
