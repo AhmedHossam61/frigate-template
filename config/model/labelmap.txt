@@ -1,2 +1,2 @@
-Safety-Helmet
-Reflective-Jacket
+0 Safety-Helmet
+1 Reflective-Jacket

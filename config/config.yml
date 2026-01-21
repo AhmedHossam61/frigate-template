@@ -3,21 +3,24 @@ mqtt:
   host: 127.0.0.1
 
 detectors:
-  cpu1:
-    type: cpu
+  onnx:
+    type: onnx
 
 model:
-  path: /config/model/best_float32.tflite
-  width: 362
-  height: 398
+  model_type: yolo-generic
+  width: 320
+  height: 320
   input_tensor: nchw
-  input_pixel_format: rgb
+  input_dtype: float
+  path: /config/model/best.onnx
   labelmap_path: /config/model/labelmap.txt
 
-objects:
-  track:
-    - Safety-Helmet
-    - Reflective-Jacket
+snapshots:
+  enabled: true
+  bounding_box: true
+  timestamp: true
+  retain:
+    default: 1
 
 cameras:
   test_video:
@@ -32,5 +35,15 @@ cameras:
       width: 362
       height: 398
       fps: 5
-
+    objects:
+      track:
+        - "Safety-Helmet"
+        - "Reflective-Jacket"
+      filters:
+        Safety-Helmet:
+          min_score: 0.15
+          threshold: 0.25
+        Reflective-Jacket:
+          min_score: 0.15
+          threshold: 0.25
 version: 0.16-0
