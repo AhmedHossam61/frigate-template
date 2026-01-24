@@ -1,33 +1,27 @@
 mqtt:
   enabled: false
-  host: 127.0.0.1
 
 detectors:
   onnx:
     type: onnx
+    device: CPU  # or GPU if you have CUDA support
+    num_threads: 3  # Adjust based on your CPU cores
 
 model:
-  model_type: yolo-generic
-  width: 320
-  height: 320
-  input_tensor: nchw
-  input_dtype: float
-  path: /config/model/best.onnx
+  path: /config/model/best_10C_uint8.onnx
   labelmap_path: /config/model/labelmap.txt
-
-snapshots:
-  enabled: true
-  bounding_box: true
-  timestamp: true
-  retain:
-    default: 1
+  model_type: yolo-generic   # غيرناها لـ ssd عشان الموديل ده SSD
+  width: 640
+  height: 640
+  input_tensor: nchw          # ✅ Add this - channels first
+  input_pixel_format: rgb     # ✅ Add this - RGB format
 
 cameras:
-  test_video:
+  test:
     ffmpeg:
       inputs:
         - path: /media/frigate/videos/veo3_construction.mp4
-          input_args: "-re -stream_loop -1 -fflags +genpts"
+          input_args: -re -stream_loop -1 -fflags +genpts
           roles:
             - detect
     detect:
@@ -37,13 +31,16 @@ cameras:
       fps: 5
     objects:
       track:
-        - "Safety-Helmet"
-        - "Reflective-Jacket"
-      filters:
-        Safety-Helmet:
-          min_score: 0.15
-          threshold: 0.25
-        Reflective-Jacket:
-          min_score: 0.15
-          threshold: 0.25
+        - Person
+        - Hardhat
+        - NO-Hardhat
+        - Safety Vest
+        - NO-Safety Vest
+        - Mask
+        - NO-Mask
+        - machinery
+        - vehicle
+        - Safety Cone
+detect:
+  enabled: true
 version: 0.16-0
