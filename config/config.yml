@@ -7,10 +7,12 @@ mqtt:
 #     device: CPU  # or GPU if you have CUDA support
 #     num_threads: 4  # Adjust based on your CPU cores
 
+
 detectors:
   onnx:
     type: onnx
-    device: GPU  # or GPU if you have CUDA support
+    device: AUTO:GPU,CPU  # OpenVINO device selector
+    # Remove num_threads - not used with OpenVINO
 
 model:
   path: /config/model/best_10C_uint8.onnx
