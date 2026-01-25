@@ -20,14 +20,14 @@ cameras:
   test:
     ffmpeg:
       inputs:
-        - path: /media/frigate/videos/veo3_construction.mp4
+        - path: /media/frigate/videos/hardhat.mp4
           input_args: -re -stream_loop -1 -fflags +genpts
           roles:
             - detect
     detect:
       enabled: true
-      width: 362
-      height: 398
+      width: 1080
+      height: 720
       fps: 5
     objects:
       track:
