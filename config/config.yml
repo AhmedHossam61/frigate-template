@@ -1,11 +1,16 @@
 mqtt:
   enabled: false
 
+# detectors:
+#   onnx:
+#     type: onnx
+#     device: CPU  # or GPU if you have CUDA support
+#     num_threads: 4  # Adjust based on your CPU cores
+
 detectors:
   onnx:
     type: onnx
-    device: CPU  # or GPU if you have CUDA support
-    num_threads: 3  # Adjust based on your CPU cores
+    device: GPU  # or GPU if you have CUDA support
 
 model:
   path: /config/model/best_10C_uint8.onnx
@@ -41,6 +46,16 @@ cameras:
         - machinery
         - vehicle
         - Safety Cone
+   # How to manually set different confidence thresholds for each class
+      filters:
+        Person:
+          min_score: 0.5  # Default
+        Hardhat:
+          min_score: 0.6  # Higher for critical PPE
+        NO-Hardhat:
+          min_score: 0.7  # Highest for safety violations
+
+          
 detect:
   enabled: true
 version: 0.16-0
